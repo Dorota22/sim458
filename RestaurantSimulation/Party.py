@@ -2,28 +2,45 @@ from Customer import Customer
 import random
 import numpy as N
 
-MIN_PEOPLE_COUNT = 1
-MAX_PEOPLE_COUNT = 4
-
 class Party(object):
     """description of class"""
   
-    def __init__(self):
-        self.numberOfPeople = random.randint(MIN_PEOPLE_COUNT, MAX_PEOPLE_COUNT)
-        partyList = []
+    def __init__(self, peopleCount, id):
+        
+        self.customerList = []
+        self.table = None
+        self.peopleCount = peopleCount
+        self.id = id
 
-        for i in xrange(numberOfPeople):
-            partyList.append(Customer())
+        for i in xrange(0, self.peopleCount):
+            self.customerList.append(Customer())
 
-        self.maxWaitingTime = N.min(partyList.Customer.maxWaitingTime)
-        self.maxEatingTime = N.max(partyList.Customer.maxEatingTime)
+        #self.maxWaitingTime = N.min(partyList.Customer.maxWaitingTime)
+        #self.maxEatingTime = N.max(partyList.Customer.maxEatingTime)
         #self.color 
 
-    def finishedEating():
-        return True
+    def finishedEating(self):
+        for customer in self.customerList:
+            if not customer.finishedEating():
+                return False
+        return True   
+            
 
-    def abandonedLine():
-        return True
+    def abandonedLine(self):
+        for customer in self.customerList:
+            if customer.abandonedLine():
+                return True
+        return False
 
-    def timeUpdate():
-        return True
+    def timeUpdate(self):
+        for customer in self.customerList:
+            customer.timeUpdate()
+        
+
+    def setTable(self, table):
+        for customer in self.customerList:
+            customer.setTable(table)
+        self.table = table
+
+    def __repr__(self):
+        return 'id '+ str(self.id) + ':' + 'C ' + str(self.peopleCount) 
