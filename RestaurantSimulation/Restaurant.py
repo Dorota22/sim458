@@ -42,6 +42,33 @@ class Restaurant(object):
                 self.waitingParties.remove(party)
                 return
 
+        # 2nd algorithm
+    def sitWithWait(self):
+               
+        # if there's 1 or more waitingParties
+        if len(self.waitingParties) > 0:
+
+                
+            for party in self.waitingParties:
+
+                # see if there's an empty table where size >= peopleCount
+                table = self.getEmptyTable(party)
+
+                # if the table exists
+                if table != None: 
+
+
+                    # sets the table's party data attribute to the first party 
+                    # in waitingParties
+                    table.setParty(party)
+
+                    # sets the party's Table data attribute to the empty table
+                    # obtained from tableList
+                    party.setTable(table)
+                    self.eatingParties.append(party)
+                    self.waitingParties.remove(party)
+                    return
+
     def timeUpdate(self):
 
         for eatingParty in self.eatingParties:        
@@ -53,13 +80,16 @@ class Restaurant(object):
                 eatingParty.setTable(None)
          
         # In this model, we sit only the first party per one time unit 
-        self.sitPartyFIFO()
+        #self.sitPartyFIFO()
+        self.sitWithWait()
                           
         for waitingParty in self.waitingParties:
             waitingParty.timeUpdate()
             if waitingParty.abandonedLine():
                 self.abandonedParties.append(waitingParty)       
-                self.waitingParties.remove(waitingParty)   
+                self.waitingParties.remove(waitingParty)  
+                
+                 
 
         print 'Tables:    ', self.tableList
         print 'Eating:    ', self.eatingParties            
