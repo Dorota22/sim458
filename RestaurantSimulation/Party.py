@@ -11,13 +11,14 @@ class Party(object):
         self.table = None
         self.peopleCount = peopleCount
         self.id = id
+        self.color = (random.random(),random.random(),random.random()) 
 
         for i in xrange(0, self.peopleCount):
             self.customerList.append(Customer())
 
         #self.maxWaitingTime = N.min(partyList.Customer.maxWaitingTime)
         #self.maxEatingTime = N.max(partyList.Customer.maxEatingTime)
-        #self.color 
+        
 
     def finishedEating(self):
         for customer in self.customerList:
