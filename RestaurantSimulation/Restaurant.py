@@ -2,6 +2,7 @@ from Table import Table
 from Party import Party
 
 import numpy as N
+import random
 
 WIDTH = 5
 LENGTH = 7
@@ -24,11 +25,19 @@ class Restaurant(object):
                 self.tableList.append(Table(tableCustomerCount))
         #self.tableList.sort()
     
-    def getEmptyTable(self, party):
+    def getEmptyTable(self, party):        
         for table in self.tableList:
             if(table.party == None and party.peopleCount <= table.maxCustomerCount):
                 return table   
-        return None                     
+        return None 
+
+                    
+     
+    def getRandomEmptyTable(self, party):
+        table = random.choice(self.tableList)                 
+        if(table.party == None and party.peopleCount <= table.maxCustomerCount):
+            return table
+        return None                                  
 
     def sitPartyFIFO(self):
         
@@ -41,9 +50,36 @@ class Restaurant(object):
                 self.eatingParties.append(party)
                 self.waitingParties.remove(party)
                 return
+    
+    def sitWithWait(self):                                      
+        for party in self.waitingParties:               
+            # see if there's an empty table where size >= peopleCount
+            table = self.getEmptyTable(party)
+            # if the table exists
+            if table != None:
+                # sets the table's party data attribute to the first party 
+                # in waitingParties
+                table.setParty(party)
+                # sets the party's Table data attribute to the empty table
+                # obtained from tableList
+                party.setTable(table)
+                self.eatingParties.append(party)
+                self.waitingParties.remove(party)
+                return 
+        return
+
+    def sitPartyRandomly(self):        
+        for party in self.waitingParties:                     
+            table = self.getRandomEmptyTable(party)
+            if table != None: 
+                table.setParty(party)
+                party.setTable(table)
+                self.eatingParties.append(party)
+                self.waitingParties.remove(party)
+                return
+        return
 
     def timeUpdate(self):
-
         for eatingParty in self.eatingParties:        
             eatingParty.timeUpdate()
             if eatingParty.finishedEating():
@@ -53,7 +89,9 @@ class Restaurant(object):
                 eatingParty.setTable(None)
          
         # In this model, we sit only the first party per one time unit 
-        self.sitPartyFIFO()
+        #self.sitPartyFIFO()
+        #self.sitWithWait()
+        self.sitPartyRandomly()
                           
         for waitingParty in self.waitingParties:
             waitingParty.timeUpdate()
@@ -61,8 +99,8 @@ class Restaurant(object):
                 self.abandonedParties.append(waitingParty)       
                 self.waitingParties.remove(waitingParty)   
 
-        print 'Tables:    ', self.tableList
-        print 'Eating:    ', self.eatingParties            
-        print 'Waiting:   ', self.waitingParties                  
-        print 'Abandoned: ', self.abandonedParties
-        print 'Satisfied: ', self.satisfiedParties
+        print ('Tables:    ', self.tableList)
+        print ('Eating:    ', self.eatingParties)            
+        print ('Waiting:   ', self.waitingParties)                  
+        print ('Abandoned: ', self.abandonedParties)
+        print ('Satisfied: ', self.satisfiedParties)

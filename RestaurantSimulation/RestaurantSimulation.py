@@ -5,7 +5,7 @@ import Visualization as V
 import random
 import time
 
-MIN_PEOPLE_COUNT = 5
+MIN_PEOPLE_COUNT = 2
 MAX_PEOPLE_COUNT = 8
 
 
@@ -14,7 +14,7 @@ class RestaurantSimulation(object):
 
     def __init__(self):
 
-        tableDefinition = [[15, 2], [2, 4],[4,6],[3,8]]
+        tableDefinition = [[15, 2], [2, 4],[4,6],[6,8]]
         
         self.restaurant = Restaurant(tableDefinition)
 
@@ -24,7 +24,7 @@ class RestaurantSimulation(object):
         id = 1
         while(True):
             #randomly add new party 
-            if id < 20 and random.random() < 0.6:
+            if id < 20 and random.random() < 0.8:
                 peopleCount = random.randint(MIN_PEOPLE_COUNT, MAX_PEOPLE_COUNT)
                 party = Party(peopleCount, id)
                 id += 1     
