@@ -31,8 +31,29 @@ class Restaurant(object):
                 return table   
         return None 
 
-                    
-     
+    def getSmallestValidEmptyTable(self, party):   
+        smallestValidTableSize = None
+         
+        # iterate through each available table in tableList
+        # tableList will be sorted    
+        for table in self.tableList:
+
+            # find a table that doesn't have a party and whose size >= party size
+            if(table.party == None and party.peopleCount <= table.maxCustomerCount):
+
+                # if we haven't already set the smallestValidTableSize, set it
+                # to this table's size -- tableList is sorted, so smallest tables
+                # appear first
+                if (smallestValidTableSize == None):
+                    smallestValidTableSize = table.maxCustomerCount
+
+                # if the table's size is the same as the smallestValidTableSize
+                # for that party, return the table
+                if (table.maxCustomerCount == smallestValidTableSize):
+                     return table 
+
+        return None 
+ 
     def getRandomEmptyTable(self, party):
         table = random.choice(self.tableList)                 
         if(table.party == None and party.peopleCount <= table.maxCustomerCount):
@@ -51,22 +72,56 @@ class Restaurant(object):
                 self.waitingParties.remove(party)
                 return
     
-    def sitWithWait(self):                                      
-        for party in self.waitingParties:               
+    def sitCanSkipParties(self): 
+        
+        # iterate though each party in the list of parties                                     
+        for party in self.waitingParties:    
+                       
             # see if there's an empty table where size >= peopleCount
             table = self.getEmptyTable(party)
+
             # if the table exists
             if table != None:
-                # sets the table's party data attribute to the first party 
-                # in waitingParties
+
+                # sets the table's party data attribute to the current party 
                 table.setParty(party)
+
                 # sets the party's Table data attribute to the empty table
                 # obtained from tableList
                 party.setTable(table)
+
+                # update eatingParties and waitingParties
                 self.eatingParties.append(party)
                 self.waitingParties.remove(party)
                 return 
-        return
+
+       # return      # don't need this one?
+
+    def sitCanSkip_GetMinTable(self): 
+
+        # iterate though each party in the list of parties                                     
+        for party in self.waitingParties:    
+                       
+            # see if there's an empty table where the table size is the 
+            # smallest in the restaurant than can accommodate the party
+            table = self.getSmallestValidEmptyTable(party)
+
+            # if the table exists and 
+            if table != None:
+
+                # sets the table's party data attribute to the current party 
+                table.setParty(party)
+
+                # sets the party's Table data attribute to the empty table
+                # obtained from tableList
+                party.setTable(table)
+
+                # update eatingParties and waitingParties
+                self.eatingParties.append(party)
+                self.waitingParties.remove(party)
+                return 
+
+        #return      # don't need this one?
 
     def sitPartyRandomly(self):        
         for party in self.waitingParties:                     
@@ -90,8 +145,9 @@ class Restaurant(object):
          
         # In this model, we sit only the first party per one time unit 
         #self.sitPartyFIFO()
-        #self.sitWithWait()
-        self.sitPartyRandomly()
+
+        self.sitCanSkipParties()
+       # self.sitPartyRandomly()
                           
         for waitingParty in self.waitingParties:
             waitingParty.timeUpdate()

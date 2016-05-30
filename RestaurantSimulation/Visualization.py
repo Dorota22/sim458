@@ -1,3 +1,5 @@
+
+
 from Restaurant import Restaurant
 
 import numpy as N
@@ -104,3 +106,4 @@ def showLine(line, row, col, data):
     for party in line:
         data[row, col : col + party.peopleCount, :] = party.color
         row += 2
+
