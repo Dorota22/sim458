@@ -4,8 +4,6 @@ from Party import Party
 import numpy as N
 import random
 
-WIDTH = 5
-LENGTH = 7
 
 class Restaurant(object):
 
@@ -15,6 +13,8 @@ class Restaurant(object):
         self.waitingParties = []
         self.abandonedParties = []
         self.satisfiedParties = []
+
+        #self.sittingMethod = sittingMethod
 
         #create tablelist based on the tableDefinition
         self.tableList = []
@@ -66,7 +66,7 @@ class Restaurant(object):
                 self.eatingParties.append(party)
                 self.waitingParties.remove(party)
                 return 
-        return
+       
 
     def sitPartyRandomly(self):        
         for party in self.waitingParties:                     
@@ -91,7 +91,8 @@ class Restaurant(object):
         # In this model, we sit only the first party per one time unit 
         #self.sitPartyFIFO()
         #self.sitWithWait()
-        self.sitPartyRandomly()
+        #self.sitPartyRandomly()
+        self.sittingMethod(self)
                           
         for waitingParty in self.waitingParties:
             waitingParty.timeUpdate()
@@ -99,8 +100,3 @@ class Restaurant(object):
                 self.abandonedParties.append(waitingParty)       
                 self.waitingParties.remove(waitingParty)   
 
-        print ('Tables:    ', self.tableList)
-        print ('Eating:    ', self.eatingParties)            
-        print ('Waiting:   ', self.waitingParties)                  
-        print ('Abandoned: ', self.abandonedParties)
-        print ('Satisfied: ', self.satisfiedParties)

@@ -1,10 +1,21 @@
 import random
+import numpy as N
+
+# 
+MAX_WAITING_TIME_MEAN = 35
+MAX_WAITING_TIME_STD = 25
+
+MAX_EATING_TIME_MEAN = 50
+MAX_EATING_TIME_STD = 20
+
+
+
 
 class Customer(object):
 
     def __init__(self):       
-        self.maxWaitingTime = random.randint(1,10)
-        self.maxEatingTime = random.randint(10, 20)
+        self.maxWaitingTime = N.random.normal(MAX_WAITING_TIME_MEAN, MAX_WAITING_TIME_STD)
+        self.maxEatingTime = N.random.normal(MAX_EATING_TIME_MEAN, MAX_EATING_TIME_STD)
         self.waitingTime  = 0
         self.eatingTime = 0
         self.table = None

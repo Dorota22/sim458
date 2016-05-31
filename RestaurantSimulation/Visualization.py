@@ -101,6 +101,8 @@ def plotRestaurant(restaurant, show=True):
     
     #return fig, ax
 def showLine(line, row, col, data):
-    for party in line:
+    for party in line:        
+        if(row >= 55):
+            return      
         data[row, col : col + party.peopleCount, :] = party.color
         row += 2
