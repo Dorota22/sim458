@@ -30,9 +30,7 @@ class Restaurant(object):
             if(table.party == None and party.peopleCount <= table.maxCustomerCount):
                 return table   
         return None 
-
-                    
-     
+ 
     def getRandomEmptyTable(self, party):
         table = random.choice(self.tableList)                 
         if(table.party == None and party.peopleCount <= table.maxCustomerCount):
@@ -45,39 +43,58 @@ class Restaurant(object):
             party = self.waitingParties[0]
             table = self.getEmptyTable(party)
             if table != None: 
-                table.setParty(party)
-                party.setTable(table)
-                self.eatingParties.append(party)
-                self.waitingParties.remove(party)
+                self.bindPartyWithTable(party, table)
                 return
     
-    def sitWithWait(self):                                      
+    def sitCanSkipParties(self): 
+        
+        # iterate though each party in the list of parties                                     
         for party in self.waitingParties:               
+                       
             # see if there's an empty table where size >= peopleCount
             table = self.getEmptyTable(party)
+
             # if the table exists
             if table != None:
-                # sets the table's party data attribute to the first party 
-                # in waitingParties
-                table.setParty(party)
-                # sets the party's Table data attribute to the empty table
-                # obtained from tableList
-                party.setTable(table)
-                self.eatingParties.append(party)
-                self.waitingParties.remove(party)
+                self.bindPartyWithTable(party, table)
                 return 
-       
+
+    def sitPartyAtBestMatch(self):        
+        for party in self.waitingParties:                     
+            table = self.getBestMatchEmptyTable(party)
+            if table != None: 
+                self.bindPartyWithTable(party, table)
+                return       
+                            
+    def getBestMatchEmptyTable(self, party):    
+        bestMatchTableSeats = None
+        for table in self.tableList:
+            if table.maxCustomerCount >= party.peopleCount:
+                bestMatchTableSeats = table.maxCustomerCount 
+                break
+                                       
+        for table in self.tableList:
+            if(table.party == None and table.maxCustomerCount == bestMatchTableSeats):
+                return table   
+        return None                 
 
     def sitPartyRandomly(self):        
         for party in self.waitingParties:                     
             table = self.getRandomEmptyTable(party)
             if table != None: 
-                table.setParty(party)
-                party.setTable(table)
-                self.eatingParties.append(party)
-                self.waitingParties.remove(party)
+                self.bindPartyWithTable(party, table)
                 return
-        return
+
+    def bindPartyWithTable(self, party, table):
+        # sets the table's party data attribute to the current party 
+        table.setParty(party)
+        # sets the party's Table data attribute to the empty table
+        # obtained from tableList
+        party.setTable(table)
+        # update eatingParties and waitingParties
+        self.eatingParties.append(party)
+        self.waitingParties.remove(party)
+                
 
     def timeUpdate(self):
         for eatingParty in self.eatingParties:        

@@ -31,7 +31,7 @@ class RestaurantSimulation(object):
             if random.random() < 1:
                 partyProbability = random.random()
                 if(partyProbability < 0.53):
-                    peopleCount = 2
+                    peopleCount = 2 
                 elif(partyProbability < 0.74):
                     peopleCount = 3
                 elif(partyProbability < 0.89):
@@ -46,10 +46,10 @@ class RestaurantSimulation(object):
                 id += 1                     
                 restaurant.waitingParties.append(party)
             timer += 1
-            V.plotRestaurant(restaurant)
+            
+            #V.plotRestaurant(restaurant)
             restaurant.timeUpdate()
-            time.sleep(1)
-            #if id == 2 and len(restaurant.waitingParties) == 0 and len(restaurant.eatingParties) == 0:
+            #time.sleep(0.5)            
         return restaurant
            
     def simulateMultiple(self, tableDefinition):             
@@ -91,18 +91,26 @@ class RestaurantSimulation(object):
         self.sittingMethod = Restaurant.sitPartyFIFO
         setupData = self.simulateTables()
         self.plotCustomerData(setupData[0], setupData[1], 1,"data1.png","FIFO")
-        self.plotCustomerData(setupData[0], setupData[1], 10, "All data", "FIFO")
+        self.plotCustomerData(setupData[0], setupData[1], 10, "All data.png", "FIFO")
 
-        self.sittingMethod = Restaurant.sitWithWait
+        self.sittingMethod = Restaurant.sitCanSkipParties
         setupData = self.simulateTables()
         self.plotCustomerData(setupData[0], setupData[1], 2, "data2.png", "BestFit")
-        self.plotCustomerData(setupData[0], setupData[1], 10, "All data", "BestFit")
+        self.plotCustomerData(setupData[0], setupData[1], 10, "All data.png", "BestFit")
 
         self.sittingMethod = Restaurant.sitPartyRandomly
         setupData = self.simulateTables()
         self.plotCustomerData(setupData[0], setupData[1], 3, "data3.png", "Random")
-        self.plotCustomerData(setupData[0], setupData[1], 10,"All data", "Random")
+        self.plotCustomerData(setupData[0], setupData[1], 10,"All data.png", "Random")
 
+        self.sittingMethod = Restaurant.sitPartyAtBestMatch
+        setupData = self.simulateTables()
+        self.plotCustomerData(setupData[0], setupData[1], 4,"data4.png","MinTable")
+        self.plotCustomerData(setupData[0], setupData[1], 10, "All data.png", "MinTable")
+
+        # for recording
+        #self.sittingMethod = Restaurant.sitPartyRandomly
+        #setupData = self.simulateMultiple([[5,2],[8,4],[2,6]])
 
 
     def plotCustomerData(self, twoTopTables, customers, figureNumber, name, plotLabel):
@@ -112,13 +120,9 @@ class RestaurantSimulation(object):
         plt.xlabel('Two-Top Tables')
         plt.ylabel('Served Customers')
         plt.title('Restaurant Simulation')
-        plt.pause(0.01)
-        #ax = plt.subplot(111)
-        #for i in xrange(5):
-        #    ax.plot(x, i * x, label='$y = %ix$' % i)
-
         plt.legend()
         plt.savefig(name, dpi=300)
+        plt.pause(0.01)
 
 
     def addToLine(self):
@@ -131,21 +135,7 @@ class RestaurantSimulation(object):
         print ('Abandoned: ', restaurant.abandonedParties)
         print ('Satisfied: ', restaurant.satisfiedParties)
 
-#totalCustomerNumber
-
 
 
 simulation = RestaurantSimulation()
 simulation.simulate()
-
-
-
-#twoTopTables = [1,2,3,4,5,6,7]
-#customers = [10, 20, 40, 50, 40, 30, 10]
-#plt.plot(twoTopTables, customers)       
-#plt.xlabel('Two-Top Tables')
-#plt.ylabel('Served Customers')
-#plt.title('Restaurant Simulation')
-#plt.pause(0.01)
-#plt.savefig('Dorota_Pasek_basic.png', dpi=300)
-#plt.show()

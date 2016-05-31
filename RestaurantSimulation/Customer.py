@@ -9,8 +9,6 @@ MAX_EATING_TIME_MEAN = 50
 MAX_EATING_TIME_STD = 20
 
 
-
-
 class Customer(object):
 
     def __init__(self):       

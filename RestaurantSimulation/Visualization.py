@@ -1,3 +1,5 @@
+
+
 from Restaurant import Restaurant
 
 import numpy as N
@@ -7,12 +9,13 @@ import matplotlib.pyplot as plt
 
 #class Visualization(object):
 ##    """description of class"""
-
+FIRST = 0
 fig = plt.figure()
 ax = fig.add_subplot(111)
 plt.ion()
 
 def plotRestaurant(restaurant, show=True):
+       
     #self.grid = N.empty((WIDTH, LENGTH), dtype=Table)
     #cmap = ['k', 'b', 'w', '0.5', '0.1']
     #convert = matplotlib.colors.ColorConverter()
@@ -94,7 +97,11 @@ def plotRestaurant(restaurant, show=True):
     ax.imshow(data, interpolation='none', extent=[0, shape[0], 0, shape[1]], zorder=0)    
     ax.axis('off')
     plt.pause(0.01)
-
+    
+    if FIRST == 0:
+        plt.pause(2)
+        global FIRST
+        FIRST = 1
 #if show == True:
    # plt.draw()
 # plt.show()
@@ -106,3 +113,4 @@ def showLine(line, row, col, data):
             return      
         data[row, col : col + party.peopleCount, :] = party.color
         row += 2
+
