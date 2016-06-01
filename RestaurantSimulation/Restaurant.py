@@ -14,8 +14,6 @@ class Restaurant(object):
         self.abandonedParties = []
         self.satisfiedParties = []
 
-        #self.sittingMethod = sittingMethod
-
         #create tablelist based on the tableDefinition
         self.tableList = []
         for i in xrange(0, len(tableDefinition)):
@@ -23,7 +21,7 @@ class Restaurant(object):
             for table in xrange(0, tableCount):
                 tableCustomerCount = tableDefinition[i][1]
                 self.tableList.append(Table(tableCustomerCount))
-        #self.tableList.sort()
+
     
     def getEmptyTable(self, party):        
         for table in self.tableList:
@@ -37,8 +35,7 @@ class Restaurant(object):
             return table
         return None                                  
 
-    def sitPartyFIFO(self):
-        
+    def sitPartyBlockingFIFO(self):       
         if len(self.waitingParties) > 0:
             party = self.waitingParties[0]
             table = self.getEmptyTable(party)
@@ -46,8 +43,7 @@ class Restaurant(object):
                 self.bindPartyWithTable(party, table)
                 return
     
-    def sitCanSkipParties(self): 
-        
+    def sitPartyBestFitFIFO(self):         
         # iterate though each party in the list of parties                                     
         for party in self.waitingParties:               
                        
@@ -59,7 +55,7 @@ class Restaurant(object):
                 self.bindPartyWithTable(party, table)
                 return 
 
-    def sitPartyAtBestMatch(self):        
+    def sitPartyClosestFit(self):        
         for party in self.waitingParties:                     
             table = self.getBestMatchEmptyTable(party)
             if table != None: 
@@ -105,10 +101,6 @@ class Restaurant(object):
                 eatingParty.table.setParty(None)
                 eatingParty.setTable(None)
          
-        # In this model, we sit only the first party per one time unit 
-        #self.sitPartyFIFO()
-        #self.sitWithWait()
-        #self.sitPartyRandomly()
         self.sittingMethod(self)
                           
         for waitingParty in self.waitingParties:

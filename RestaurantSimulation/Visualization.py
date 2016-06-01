@@ -1,5 +1,4 @@
 
-
 from Restaurant import Restaurant
 
 import numpy as N
@@ -7,18 +6,14 @@ import matplotlib
 import matplotlib.pyplot as plt
 
 
-#class Visualization(object):
-##    """description of class"""
-FIRST = 0
+# for recording
+#FIRST = 0
 fig = plt.figure()
 ax = fig.add_subplot(111)
 plt.ion()
 
 def plotRestaurant(restaurant, show=True):
        
-    #self.grid = N.empty((WIDTH, LENGTH), dtype=Table)
-    #cmap = ['k', 'b', 'w', '0.5', '0.1']
-    #convert = matplotlib.colors.ColorConverter()
     row = 60
     col = 60
     data = N.zeros((row, col, 3), dtype='f')
@@ -76,13 +71,6 @@ def plotRestaurant(restaurant, show=True):
     satisfiedPartyCol = 50
     showLine(restaurant.satisfiedParties, satisfiedPartyRow, satisfiedPartyCol, data)
   
-    #for party in restaurant.waitingParties:
-    #    data[partyRow, partyCol : partyCol + party.peopleCount, :] = party.color
-    #    partyRow += 1
-
-    #plt.figure(1)
-    #plt.ion()
-    #fig, ax = plt.subplots(1, 1)
     font = {'family': 'serif',
         'color':  'white',
         'weight': 'normal',
@@ -96,17 +84,16 @@ def plotRestaurant(restaurant, show=True):
     plt.title("Restaurant Simulation")
     ax.imshow(data, interpolation='none', extent=[0, shape[0], 0, shape[1]], zorder=0)    
     ax.axis('off')
-    plt.pause(0.01)
-    
-    if FIRST == 0:
-        plt.pause(2)
-        global FIRST
-        FIRST = 1
-#if show == True:
-   # plt.draw()
-# plt.show()
-    
-    #return fig, ax
+    plt.pause(0.5)
+     
+
+    #for recording
+    #if FIRST == 0:
+    #    plt.pause(2)
+    #    global FIRST
+    #    FIRST = 1
+
+
 def showLine(line, row, col, data):
     for party in line:        
         if(row >= 55):

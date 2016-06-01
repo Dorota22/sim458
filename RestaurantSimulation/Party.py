@@ -3,7 +3,7 @@ import random
 import numpy as N
 
 class Party(object):
-    """description of class"""
+    """ Returns a party object"""
   
     def __init__(self, peopleCount, id):
         
@@ -16,9 +16,6 @@ class Party(object):
         for i in xrange(0, self.peopleCount):
             self.customerList.append(Customer())
 
-        #self.maxWaitingTime = N.min(partyList.Customer.maxWaitingTime)
-        #self.maxEatingTime = N.max(partyList.Customer.maxEatingTime)
-        
 
     def finishedEating(self):
         for customer in self.customerList:
