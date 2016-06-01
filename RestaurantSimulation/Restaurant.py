@@ -43,7 +43,7 @@ class Restaurant(object):
                 self.bindPartyWithTable(party, table)
                 return
     
-    def sitPartyBestFitFIFO(self):         
+    def sitPartySmallestAvailTable(self):         
         # iterate though each party in the list of parties                                     
         for party in self.waitingParties:               
                        
@@ -55,7 +55,7 @@ class Restaurant(object):
                 self.bindPartyWithTable(party, table)
                 return 
 
-    def sitPartyClosestFit(self):        
+    def sitPartySmallestPossibleTable(self):        
         for party in self.waitingParties:                     
             table = self.getBestMatchEmptyTable(party)
             if table != None: 
