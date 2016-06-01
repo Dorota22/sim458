@@ -73,9 +73,6 @@ class RestaurantSimulation(object):
         
         meanCustomerServed = N.mean(totalServedCustomers)
         stdCustomerServed = N.std(totalServedCustomers)
-        print meanCustomerServed
-        print 'numpy: ', totalServedCustomers
-        print 'std: ', stdCustomerServed
         return meanCustomerServed, stdCustomerServed
         
     def simulateTables(self):
@@ -87,8 +84,7 @@ class RestaurantSimulation(object):
             tableSortedDefinition = sorted(tableDefinition, key = lambda l:l[1])       
             statistics = self.simulateMultiple(tableSortedDefinition)
             twoTopTables.append(twoTops)
-            customers.append(statistics[0])
-            print twoTops, " ", statistics[0]            
+            customers.append(statistics[0])           
         return twoTopTables, customers
 
     def simulate(self):
@@ -99,8 +95,8 @@ class RestaurantSimulation(object):
 
         self.sittingMethod = Restaurant.sitPartySmallestAvailTable
         setupData = self.simulateTables()
-        self.plotCustomerData(setupData[0], setupData[1], 2, "data2.png", "SmallestAvailTable")
-        self.plotCustomerData(setupData[0], setupData[1], 10, "All data.png", "SmallestAvailTable")
+        self.plotCustomerData(setupData[0], setupData[1], 2, "data2.png", "SmallestAvailableTable")
+        self.plotCustomerData(setupData[0], setupData[1], 10, "All data.png", "SmallestAvailableTable")
 
         self.sittingMethod = Restaurant.sitPartyRandomly
         setupData = self.simulateTables()
