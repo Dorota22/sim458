@@ -97,20 +97,20 @@ class RestaurantSimulation(object):
         self.plotCustomerData(setupData[0], setupData[1], 1,"data1.png","BlockingFIFO")
         self.plotCustomerData(setupData[0], setupData[1], 10, "All data.png", "BlockingFIFO")
 
-        self.sittingMethod = Restaurant.sitPartyBestFitFIFO
+        self.sittingMethod = Restaurant.sitPartySmallestAvailTable
         setupData = self.simulateTables()
-        self.plotCustomerData(setupData[0], setupData[1], 2, "data2.png", "BestFitFIFO")
-        self.plotCustomerData(setupData[0], setupData[1], 10, "All data.png", "BestFitFIFO")
+        self.plotCustomerData(setupData[0], setupData[1], 2, "data2.png", "SmallestAvailTable")
+        self.plotCustomerData(setupData[0], setupData[1], 10, "All data.png", "SmallestAvailTable")
 
         self.sittingMethod = Restaurant.sitPartyRandomly
         setupData = self.simulateTables()
-        self.plotCustomerData(setupData[0], setupData[1], 3, "data3.png", "Random")
-        self.plotCustomerData(setupData[0], setupData[1], 10,"All data.png", "Random")
+        self.plotCustomerData(setupData[0], setupData[1], 3, "data3.png", "RandomMatchingTable")
+        self.plotCustomerData(setupData[0], setupData[1], 10,"All data.png", "RandomMatchingTable")
 
-        self.sittingMethod = Restaurant.sitPartyClosestFit
+        self.sittingMethod = Restaurant.sitPartySmallestPossibleTable
         setupData = self.simulateTables()
-        self.plotCustomerData(setupData[0], setupData[1], 4,"data4.png","ClosestFit")
-        self.plotCustomerData(setupData[0], setupData[1], 10, "All data.png", "ClosestFit")
+        self.plotCustomerData(setupData[0], setupData[1], 4,"data4.png","SmallestPossibleTable")
+        self.plotCustomerData(setupData[0], setupData[1], 10, "All data.png", "SmallestPossibleTable")
 
         # for recording
         #self.sittingMethod = Restaurant.sitPartyRandomly
