@@ -141,5 +141,6 @@ class RestaurantSimulation(object):
         print ('Satisfied: ', restaurant.satisfiedParties)
 
 
+
 simulation = RestaurantSimulation()
 simulation.simulate()
